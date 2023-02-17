@@ -11,8 +11,8 @@ public class Jogo extends PanacheEntity {
 
     private String nome;
     private String estudio;
-    private Double valor;
     private Integer classificacao;
+    private Double valor;
     private LocalDate lancamento;
 
     public String getNome() {
