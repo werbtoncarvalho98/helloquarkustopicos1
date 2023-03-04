@@ -12,10 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import br.unitins.model.Jogo;
 import java.util.List;
+import javax.inject.Inject;
+import br.unitins.repository.JogoRepository;
 
 @Path("/Jogo")
 public class JogoResource {
-    
+
+    JogoRepository repository;
+
     // Inserir
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -73,5 +77,24 @@ public class JogoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Jogo searchJogo(@PathParam("id") Long id) {
         return Jogo.findById(id);
+    }
+
+    // Consultar por nome repository
+    @GET
+    @Path("/{nome}")
+    public Jogo searchNomeJogo(@PathParam("nome") String nome) {
+        return repository.findByName(nome);
+    }
+
+    // Deletar por nome repository
+    @DELETE
+    @Path("/{nome}")
+    @Transactional
+    public Jogo deleteNomeJogo(@PathParam("nome") String nome) {
+        Jogo delJogo = repository.findByName(nome);
+
+        repository.delete(delJogo);
+
+        return delJogo;
     }
 }
